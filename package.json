@@ -1,5 +1,5 @@
 {
-  "name": "openserv-hackathon",
+  "name": "hiremind",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,5 +23,7 @@
     "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "description": "Pay an AI seller agent on-chain, get a research brief with receipt. OpenServ x402-style pay-per-brief on Kite testnet.",
+  "license": "MIT"
 }

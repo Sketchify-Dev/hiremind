@@ -1,5 +1,11 @@
 # HireMind: pay an agent, get a brief, keep the receipt
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![OpenServ](https://img.shields.io/badge/OpenServ-agent_network-indigo)](https://openserv.ai)
+[![Kite testnet](https://img.shields.io/badge/Kite-testnet_2368-teal)](https://testnet.kitescan.ai)
+
 Open Track entry for **SERV Hackathon 02**. A seller agent on the OpenServ
 network writes research briefs for a fixed on-chain price. Buyers pay on Kite
 testnet, the app verifies the payment on-chain, the brief is delivered with a
