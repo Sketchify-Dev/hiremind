@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/icon.png", sizes: "512x512", type: "image/png" },
-      { url: "/hm-mark.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "HireMind",
     type: "website",
-    images: [{ url: "/hm-icon-512.png", width: 512, height: 512, alt: "HireMind mark, blue H with a verified seal" }],
+    images: [{ url: "/hm-icon-512.png", width: 512, height: 512, alt: "HireMind mark, segmented blue H with a navy link bar" }],
   },
   twitter: {
     card: "summary",

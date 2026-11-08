@@ -258,8 +258,7 @@ export function BriefFlowInner() {
       <header className="hm-nav">
         <nav className="hm-frame hm-nav-inner" aria-label="Primary">
           <Link href="/" className="flex items-center gap-2" aria-label="HireMind home">
-            <Image src="/hm-mark.svg" alt="" width={32} height={32} />
-            <span style={{ fontWeight: 600, fontSize: '1.15rem', letterSpacing: '-0.02em' }}>HireMind</span>
+            <Image src="/hm-logo-horizontal.svg" alt="HireMind" width={172} height={56} className="hm-nav-logo" priority />
           </Link>
           <div className="hm-nav-links">
             <Link href="/#how">How it works</Link>

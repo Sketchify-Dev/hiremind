@@ -14,7 +14,7 @@ Page job: make a judge believe the pay-to-brief loop is real in 30 seconds.
 | Paper   | #F6F3EC | receipts, brief sheets, fields                 |
 | Ink     | #26251E | headlines, body, borders                       |
 | Muted   | #5F5D55 | secondary text                                 |
-| Accent  | #2456D6 | one blue: links, buttons, faq open, price seal |
+| Accent  | #1F4FD1 | one blue: links, buttons, faq open, price seal |
 | Mint    | #0E7A4D | paid and verified states ONLY, never decoration|
 | Gold    | #8A5B00 | payment step callouts only                     |
 | Error   | #7A1A14 on #FBEAE8 | errors                               |

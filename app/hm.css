@@ -6,7 +6,7 @@
   --hm-paper: #f6f3ec;
   --hm-ink: #26251e;
   --hm-muted: #5f5d55;
-  --hm-accent: #2456d6;
+  --hm-accent: #1f4fd1;
   --hm-accent-ink: #ffffff;
   --hm-mint: #0e7a4d;
   --hm-gold: #8a5b00;
@@ -75,6 +75,12 @@
   justify-content: space-between;
   gap: 1rem;
   height: 4rem;
+}
+
+.hm-nav-logo {
+  display: block;
+  height: 2.5rem;
+  width: auto;
 }
 
 .hm-nav-links {
