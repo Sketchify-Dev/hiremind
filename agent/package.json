@@ -1,0 +1,22 @@
+{
+  "name": "hiremind-seller-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HireMind seller agent: paid research briefs on OpenServ",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node -r dotenv/config dist/index.js"
+  },
+  "dependencies": {
+    "@openserv-labs/client": "^2.5.3",
+    "@openserv-labs/sdk": "^2.4.1",
+    "dotenv": "^16.4.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsx": "^4.19.0",
+    "typescript": "^5"
+  }
+}
