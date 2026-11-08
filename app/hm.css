@@ -18,11 +18,22 @@
   --hm-frame: clamp(20px, 4vw, 64px);
 }
 
+/* containment: grid children must shrink past long code lines,
+   otherwise a pre block blows the page wider than the viewport */
+.hm-flow > *,
+.hm-showcase > *,
+.hm-price-grid > *,
+.hm-buy-grid > *,
+.hm-faq-grid > * {
+  min-width: 0;
+}
+
 .hm-body {
   background: var(--hm-bg);
   color: var(--hm-ink);
   font-family: var(--hm-font), "Bricolage Grotesk", "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 .hm-frame {
@@ -37,6 +48,7 @@
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 0.92;
+  text-wrap: balance;
 }
 
 .hm-lead {
@@ -350,6 +362,7 @@ button.hm-chip:disabled {
 .hm-flow-step p:first-child {
   font-size: 1.25rem;
   font-weight: 500;
+  text-wrap: balance;
 }
 
 .hm-call {
@@ -656,6 +669,16 @@ button.hm-chip:disabled {
   letter-spacing: -0.04em;
   font-weight: 600;
   text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  .hm-cta {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .hm-cta-close {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+  }
 }
 
 .hm-cta .hm-btn {
