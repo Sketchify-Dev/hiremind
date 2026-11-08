@@ -1,0 +1,35 @@
+# HireMind
+
+Pay an AI seller agent on-chain, get a research brief with receipt.
+Built for SERV Hackathon 02, Open Track, on the OpenServ agent network.
+
+No custom domain yet. When one exists, update the host in app/layout.tsx,
+app/robots.ts, app/sitemap.ts, and this file.
+
+## Pages
+
+- / is the marketing landing: hero, how it works, real delivered briefs, price, FAQ
+- /brief is the buy flow: topic field, 0.01 KITE payment on Kite testnet
+  (chain 2368), on-chain verification, brief plus receipt
+- /privacy is the privacy note: no tracking, no accounts
+
+## API
+
+- GET /api/brief returns price info, seller address, build version, delivered count
+- POST /api/brief with a topic answers 402 with price and seller address
+- POST /api/brief with a topic and txHash verifies payment on-chain, then delivers
+  the brief plus receipt. Each hash pays out exactly once.
+
+## Notes for judges
+
+- Settlement is x402-style (402, pay, verify, deliver), not the full x402
+  facilitator flow. Settlement is fully on Kite testnet.
+- Receipts honestly label the generation path: SERV Reasoning via the
+  OpenServ runtime, or a labeled direct fallback.
+- Kite testnet: chain ID 2368, RPC https://rpc-testnet.gokite.ai,
+  faucet https://faucet.gokite.ai, explorer https://testnet.kitescan.ai.
+
+## Repo
+
+Seller agent in agent/ (OpenServ SDK, run-less capability research_brief).
+Web app in app/ (Next.js, Viem). See README.md for setup.

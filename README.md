@@ -26,12 +26,16 @@ Live loop: topic in, 0.01 KITE out, brief plus receipt back.
 - `app/lib/markdown.tsx`: tiny safe renderer for brief markdown. Builds React
   nodes directly, never raw HTML, so model output stays inert. Supports
   headings, lists, bold, and links (http and https only).
-- `app/page.tsx`: marketing landing (hero with buy CTA, proof strip, how it
-  works, use cases, comparison, checklist, FAQ). See `DESIGN.md` for the
-  design contract.
+- `app/page.tsx`: marketing landing (hero with a real delivered receipt,
+  proof line, how-it-works call and response column, showcase of real
+  briefs, price, FAQ). See `DESIGN.md` for the design contract.
 - `app/brief/`: the buy flow lives here. Topic field and price, payment with
   on-chain verification, brief renders as a document below, receipt as a
   stamped slip.
+- `app/privacy/`, `app/not-found.tsx`, `app/robots.ts`, `app/sitemap.ts`,
+  `public/llms.txt`: finish line checklist (privacy note, 404, robots,
+  sitemap, llms.txt). Canonical tags on `/` and `/brief`, JSON-LD
+  (WebSite plus SoftwareApplication) on the landing.
 
 ## Setup
 

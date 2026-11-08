@@ -1,0 +1,1048 @@
+/* HireMind deck: stone and blueprint. The receipt is the page. */
+
+:root {
+  --hm-bg: #dfdedb;
+  --hm-surface: #d3d2ce;
+  --hm-paper: #f6f3ec;
+  --hm-ink: #26251e;
+  --hm-muted: #5f5d55;
+  --hm-accent: #2456d6;
+  --hm-accent-ink: #ffffff;
+  --hm-mint: #0e7a4d;
+  --hm-gold: #8a5b00;
+  --hm-step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --hm-step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --hm-step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --hm-step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --hm-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --hm-frame: clamp(20px, 4vw, 64px);
+}
+
+.hm-body {
+  background: var(--hm-bg);
+  color: var(--hm-ink);
+  font-family: var(--hm-font), "Bricolage Grotesk", "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hm-frame {
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: var(--hm-frame);
+}
+
+/* ---------- type ---------- */
+.hm-display {
+  font-family: "Bricolage Grotesk", "Inter", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.hm-lead {
+  font-size: var(--hm-step-lead);
+  line-height: 1.5;
+}
+
+.hm-body-text {
+  font-size: var(--hm-step-body);
+  line-height: 1.5;
+}
+
+.hm-small {
+  font-size: var(--hm-step-small);
+  line-height: 1.45;
+}
+
+/* tabular numerals for hashes, prices, chain ids */
+.hm-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ---------- nav ---------- */
+.hm-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--hm-bg);
+  border-bottom: 2px solid var(--hm-ink);
+}
+
+.hm-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 4rem;
+}
+
+.hm-nav-links {
+  display: none;
+  align-items: center;
+  gap: 1.75rem;
+  font-size: 1rem;
+}
+
+.hm-nav-links a {
+  color: var(--hm-ink);
+  text-decoration: none;
+}
+
+.hm-nav-links a:hover {
+  color: var(--hm-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 768px) {
+  .hm-nav-links {
+    display: flex;
+  }
+}
+
+/* ---------- buttons ---------- */
+.hm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  padding: 0 1.75rem;
+  border-radius: 4px;
+  background: var(--hm-accent);
+  color: var(--hm-accent-ink);
+  font-size: 1.06rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  transition: transform 160ms var(--hm-ease), background 160ms var(--hm-ease);
+}
+
+.hm-btn:hover:not(:disabled) {
+  background: #1c46b4;
+  transform: translateY(-1px);
+}
+
+.hm-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.hm-btn:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.hm-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border-radius: 4px;
+  border: 2px solid var(--hm-ink);
+  background: transparent;
+  color: var(--hm-ink);
+  font-size: 1.06rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 160ms var(--hm-ease), transform 160ms var(--hm-ease);
+}
+
+.hm-btn-ghost:hover {
+  background: rgba(38, 37, 30, 0.06);
+  transform: translateY(-1px);
+}
+
+.hm-link {
+  color: var(--hm-accent);
+  text-underline-offset: 3px;
+}
+
+.hm-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- fields ---------- */
+.hm-field {
+  width: 100%;
+  border: 2px solid var(--hm-ink);
+  border-radius: 4px;
+  background: var(--hm-paper);
+  color: var(--hm-ink);
+  padding: 0.9rem 1.1rem;
+  font-size: 1.06rem;
+  outline: none;
+  transition: box-shadow 160ms var(--hm-ease), background 160ms var(--hm-ease);
+}
+
+.hm-field::placeholder {
+  color: var(--hm-muted);
+}
+
+.hm-field:focus {
+  box-shadow: 0 0 0 3px rgba(36, 86, 214, 0.35);
+  background: #fffdf8;
+}
+
+.hm-field:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.hm-chip {
+  border-radius: 999px;
+  border: 2px solid var(--hm-ink);
+  background: transparent;
+  padding: 0.45rem 1rem;
+  font-size: 0.95rem;
+  color: var(--hm-ink);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 150ms var(--hm-ease), transform 150ms var(--hm-ease);
+}
+
+button.hm-chip:hover:not(:disabled),
+a.hm-chip:hover {
+  background: var(--hm-ink);
+  color: var(--hm-bg);
+  transform: translateY(-1px);
+}
+
+button.hm-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- hero ---------- */
+.hm-hero-split {
+  display: grid;
+  gap: 0;
+  border: 2px solid var(--hm-ink);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--hm-surface);
+}
+
+@media (min-width: 1024px) {
+  .hm-hero-split {
+    grid-template-columns: 5fr 7fr;
+  }
+}
+
+.hm-hero-left {
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 22rem;
+}
+
+.hm-hero-right {
+  background: var(--hm-ink);
+  color: var(--hm-bg);
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- receipt fragment (data-ui: product's own conventions inside) ---------- */
+.hm-receipt {
+  background: var(--hm-paper);
+  color: var(--hm-ink);
+  border-radius: 4px;
+  width: min(100%, 26rem);
+  padding: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.55);
+}
+
+.hm-receipt-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 2px dashed rgba(38, 37, 30, 0.3);
+}
+
+.hm-receipt-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.hm-receipt-verified {
+  color: var(--hm-mint);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.hm-receipt dl {
+  margin: 0;
+  padding: 0.9rem 0 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.hm-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hm-receipt-row dt {
+  color: var(--hm-muted);
+  flex-shrink: 0;
+}
+
+.hm-receipt-row dd {
+  margin: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.hm-receipt-foot {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 2px dashed rgba(38, 37, 30, 0.3);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--hm-muted);
+}
+
+/* ---------- sections ---------- */
+.hm-section {
+  padding-top: clamp(5rem, 12vw, 10rem);
+}
+
+.hm-section-head {
+  font-size: var(--hm-step-head);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  font-weight: 600;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+/* how-it-works: call and response column */
+.hm-flow {
+  max-width: 40rem;
+  margin-top: 3.5rem;
+  display: grid;
+  gap: 5.5rem;
+}
+
+.hm-flow-step p:first-child {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.hm-call {
+  margin-top: 1rem;
+  background: var(--hm-surface);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.hm-call pre {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.hm-response {
+  margin-top: 1.5rem;
+  margin-left: 3.5rem;
+}
+
+@media (max-width: 640px) {
+  .hm-response {
+    margin-left: 0;
+  }
+}
+
+.hm-finish {
+  max-width: 48rem;
+}
+
+/* showcase: output index + live sheet */
+.hm-showcase {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hm-showcase {
+    grid-template-columns: 5fr 7fr;
+    align-items: start;
+  }
+}
+
+.hm-index {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.hm-index-btn {
+  background: none;
+  border: 0;
+  padding: 0.4rem 0;
+  text-align: left;
+  font-size: clamp(1.6rem, 3.4vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  color: var(--hm-muted);
+  cursor: pointer;
+}
+
+.hm-index-btn[aria-pressed="true"] {
+  color: var(--hm-ink);
+}
+
+.hm-index-btn:hover {
+  color: var(--hm-ink);
+}
+
+.hm-stage {
+  background: var(--hm-surface);
+  border-radius: 8px;
+  min-height: 34rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  overflow: hidden;
+}
+
+.hm-sheet {
+  background: var(--hm-paper);
+  color: #1c1a15;
+  border-radius: 4px;
+  max-width: 35rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  font-family: Georgia, "Times New Roman", serif;
+  box-shadow: 0 24px 60px -24px rgba(38, 37, 30, 0.4);
+}
+
+.hm-sheet h3 {
+  font-size: 1.2rem;
+  margin: 1.25rem 0 0.4rem;
+  font-weight: 700;
+}
+
+.hm-sheet h3:first-child {
+  margin-top: 0;
+}
+
+.hm-sheet p,
+.hm-sheet li {
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.hm-sheet ul {
+  padding-left: 1.3rem;
+  margin: 0.4rem 0;
+  list-style: disc;
+}
+
+.hm-sheet-fade {
+  animation: hm-fade 200ms var(--hm-ease);
+}
+
+@keyframes hm-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* pricing: the price, very large */
+.hm-price-grid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hm-price-grid {
+    grid-template-columns: 4fr 8fr;
+  }
+}
+
+.hm-price-figure {
+  font-size: clamp(7.5rem, 16vw, 15rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+  position: relative;
+}
+
+.hm-price-figure .hm-cur {
+  font-size: 0.5em;
+  vertical-align: 0.55em;
+  letter-spacing: -0.03em;
+}
+
+.hm-price-per {
+  font-size: 1.06rem;
+  margin-left: 0.75rem;
+  letter-spacing: 0;
+}
+
+.hm-includes {
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 1.12rem;
+}
+
+.hm-price-seal {
+  position: absolute;
+  top: -8%;
+  right: 6%;
+  width: clamp(5rem, 10vw, 8rem);
+  height: auto;
+  transform: rotate(8deg);
+}
+
+/* faq: accordion of filled tiles */
+.hm-faq-grid {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .hm-faq-grid {
+    grid-template-columns: 4fr 8fr;
+  }
+
+  .hm-faq-head {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.hm-faq-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.hm-faq {
+  background: var(--hm-surface);
+  border-radius: 8px;
+  border: 0;
+}
+
+.hm-faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.hm-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.hm-faq summary .hm-plus {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.hm-faq summary .hm-plus::before,
+.hm-faq summary .hm-plus::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.hm-faq summary .hm-plus::before {
+  left: 0;
+  top: 6.5px;
+  width: 16px;
+  height: 3px;
+}
+
+.hm-faq summary .hm-plus::after {
+  left: 6.5px;
+  top: 0;
+  width: 3px;
+  height: 16px;
+  transition: transform 200ms var(--hm-ease);
+}
+
+.hm-faq[open] {
+  background: var(--hm-accent);
+  color: var(--hm-accent-ink);
+}
+
+.hm-faq[open] summary .hm-plus::after {
+  transform: rotate(90deg);
+}
+
+.hm-faq .hm-faq-a {
+  padding: 0 1.5rem 1.5rem;
+  font-size: 1.06rem;
+  line-height: 1.55;
+  max-width: 52ch;
+}
+
+/* cta band */
+.hm-cta {
+  margin-top: clamp(5rem, 12vw, 10rem);
+  background: var(--hm-accent);
+  color: var(--hm-accent-ink);
+  border-radius: 8px;
+  padding: clamp(2.5rem, 6vw, 5rem);
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hm-cta {
+    grid-template-columns: 7fr 5fr;
+  }
+}
+
+.hm-cta-close {
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.hm-cta .hm-btn {
+  background: var(--hm-bg);
+  color: var(--hm-ink);
+}
+
+.hm-cta .hm-btn:hover:not(:disabled) {
+  background: #fff;
+}
+
+/* delivered brief document on paper */
+.hm-doc {
+  background: var(--hm-paper);
+  color: #1c1a15;
+  border-radius: 8px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.hm-doc > * + * {
+  margin-top: 0.85rem;
+}
+
+.hm-doc h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  padding-top: 0.75rem;
+  border-top: 2px solid rgba(38, 37, 30, 0.2);
+}
+
+.hm-doc h2:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.hm-doc h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.hm-doc p,
+.hm-doc li {
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.hm-doc ul,
+.hm-doc ol {
+  padding-left: 1.4rem;
+}
+
+.hm-doc ul {
+  list-style: disc;
+}
+
+.hm-doc ol {
+  list-style: decimal;
+}
+
+.hm-doc li + li {
+  margin-top: 0.35rem;
+}
+
+.hm-doc a {
+  color: var(--hm-accent);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.hm-doc strong {
+  font-weight: 700;
+}
+
+/* ---------- buy terminal (the product fragment on /brief) ---------- */
+.hm-buy-grid {
+  display: grid;
+  gap: 2.5rem;
+  padding-top: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 1024px) {
+  .hm-buy-grid {
+    grid-template-columns: 5fr 7fr;
+    align-items: start;
+  }
+}
+
+.hm-term {
+  background: var(--hm-paper);
+  border: 2px solid var(--hm-ink);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hm-term-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1.25rem;
+  border-bottom: 2px solid rgba(38, 37, 30, 0.15);
+}
+
+.hm-dots {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.hm-dots span {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: rgba(38, 37, 30, 0.22);
+}
+
+.hm-dots span + span {
+  background: rgba(38, 37, 30, 0.4);
+}
+
+.hm-dots span + span + span {
+  background: rgba(38, 37, 30, 0.6);
+}
+
+.hm-term-head p {
+  margin: 0;
+  font-size: var(--hm-step-small);
+  color: var(--hm-muted);
+}
+
+.hm-term-body {
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .hm-term-body {
+    padding: 1.5rem;
+  }
+}
+
+/* payment step: the one place gold is allowed */
+.hm-pay {
+  margin-top: 1.25rem;
+  border: 2px solid var(--hm-gold);
+  border-radius: 8px;
+  background: #fbf7ec;
+  padding: 1.25rem;
+}
+
+.hm-pay-addr {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--hm-surface);
+  border-radius: 8px;
+  padding: 0.65rem 0.65rem 0.65rem 1rem;
+}
+
+.hm-pay-addr code {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* success panel: the one place mint fills are allowed */
+.hm-ok {
+  margin-top: 1rem;
+  border: 2px solid var(--hm-mint);
+  background: #e9f6ef;
+  color: #0b4a30;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.hm-stats {
+  margin-top: 2rem;
+  border-top: 2px solid var(--hm-ink);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 2rem;
+}
+
+.hm-stats > div {
+  padding: 1rem 0;
+  border-bottom: 2px solid rgba(38, 37, 30, 0.15);
+}
+
+.hm-stats dt {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.hm-stats dd {
+  margin: 0.25rem 0 0;
+  color: var(--hm-muted);
+  font-size: var(--hm-step-small);
+}
+
+.hm-crumb {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-size: var(--hm-step-small);
+  color: var(--hm-muted);
+}
+
+.hm-crumb a {
+  color: var(--hm-ink);
+}
+
+.hm-sticky-cta {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .hm-sticky-cta {
+    display: none;
+  }
+}
+
+/* status line */
+.hm-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: var(--hm-step-small);
+  color: var(--hm-muted);
+}
+
+.hm-status .ok {
+  color: var(--hm-mint);
+  font-weight: 600;
+}
+
+/* feed */
+.hm-feed {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 1rem 0 0;
+  border-top: 2px solid rgba(38, 37, 30, 0.2);
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.hm-feed li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.hm-feed .hm-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(38, 37, 30, 0.25);
+  flex-shrink: 0;
+  transform: translateY(-1px);
+}
+
+.hm-feed li.on .hm-dot {
+  background: var(--hm-mint);
+}
+
+/* error */
+.hm-error {
+  margin-top: 1rem;
+  border: 2px solid #b3261e;
+  background: #fbeae8;
+  color: #7a1a14;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* footer: single quiet line */
+.hm-footer {
+  margin-top: clamp(6rem, 16vw, 12rem);
+  padding-bottom: 2rem;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+  .hm-footer {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: baseline;
+  }
+
+  .hm-footer .mid {
+    text-align: center;
+  }
+
+  .hm-footer .right {
+    text-align: right;
+  }
+}
+
+.hm-footer a {
+  color: var(--hm-ink);
+  margin-right: 1.5rem;
+}
+
+.hm-footer a:last-child {
+  margin-right: 0;
+}
+
+.hm-footer .dim {
+  color: var(--hm-muted);
+}
+
+/* ---------- motion ---------- */
+.hm-mask {
+  overflow: hidden;
+}
+
+.hm-mask > span {
+  display: block;
+  transform: translateY(110%);
+  animation: hm-rise 900ms var(--hm-ease) forwards;
+}
+
+.hm-mask.d2 > span {
+  animation-delay: 110ms;
+}
+
+@keyframes hm-rise {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hm-fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: hm-fade-up 600ms var(--hm-ease) forwards;
+  animation-delay: 220ms;
+}
+
+@keyframes hm-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hidden until revealed only when JS runs. Without JS the class is
+   never added, so content stays visible. */
+.hm-js .hm-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 480ms var(--hm-ease), transform 480ms var(--hm-ease);
+}
+
+.hm-js .hm-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-mask > span {
+    transform: none;
+    animation: none;
+  }
+
+  .hm-fade-up {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .hm-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hm-index-btn,
+  .hm-btn,
+  .hm-btn-ghost,
+  .hm-chip {
+    transition: none;
+  }
+}
+
+.hm-btn:focus-visible,
+.hm-btn-ghost:focus-visible,
+.hm-chip:focus-visible,
+.hm-field:focus-visible,
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--hm-accent);
+  outline-offset: 3px;
+}
