@@ -32,8 +32,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files (examples stay tracked so setup works from a fresh clone)
+.env
+.env.local
+.env.*.local
 
 # OpenServ provision output (contains agent api keys / trigger tokens)
 .openserv.json
