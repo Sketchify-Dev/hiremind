@@ -20,5 +20,7 @@ the platform runtime first, then a direct provider chain sequentially so the
 demo never dead-ends on tunnel flakiness; the receipt always names which path
 ran. No completed SERV run observed yet, see README truthful notes.
 
-**Links:** repo (this), demo video (pending), seller agent 4926 / workflow
-HireMind Brief Machine, KiteScan transaction from the recorded demo.
+**Links:** repo (this), [demo video](https://github.com/Sketchify-Dev/hiremind/releases/tag/demo-video-pro)
+(95.8s pro cut: voiceover, captions, score, logo end-card), seller agent 4926 /
+workflow HireMind Brief Machine, [KiteScan payment from the recorded demo](https://testnet.kitescan.ai/tx/0xb672b18015289bb89a7b96617d336a27b6e855e9c8d268913ddb819cff9b18f1)
+(0.01 KITE, block 22043830, receipt success).

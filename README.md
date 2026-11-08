@@ -13,6 +13,15 @@ receipt that links back to the transaction.
 
 Live loop: topic in, 0.01 KITE out, brief plus receipt back.
 
+## Demo video
+
+[Pro cut, 95.8s](https://github.com/Sketchify-Dev/hiremind/releases/tag/demo-video-pro):
+voiceover with synced captions, original score, logo end-card. Payment evidence
+is a viewer-paid 0.01 KITE transaction
+([KiteScan](https://testnet.kitescan.ai/tx/0xb672b18015289bb89a7b96617d336a27b6e855e9c8d268913ddb819cff9b18f1),
+block 22043830, receipt success). Sample footage is labeled on the landing
+hero; the generation path is labeled on every receipt.
+
 ## Architecture
 
 - `agent/`: OpenServ seller agent (`@openserv-labs/sdk` + `@openserv-labs/client`).
