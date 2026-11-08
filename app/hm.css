@@ -406,6 +406,7 @@ button.hm-chip:disabled {
   border: 0;
   padding: 0.4rem 0;
   text-align: left;
+  text-wrap: balance;
   font-size: clamp(1.6rem, 3.4vw, 2.75rem);
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -507,6 +508,18 @@ button.hm-chip:disabled {
   font-size: 1.06rem;
   margin-left: 0.75rem;
   letter-spacing: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .hm-price-figure {
+    font-size: clamp(4.5rem, 26vw, 7rem);
+  }
+  .hm-price-per {
+    display: block;
+    font-size: 0.95rem;
+    margin: 0.75rem 0 0;
+  }
 }
 
 .hm-includes {
