@@ -51,3 +51,8 @@ next-env.d.ts
 
 # design skill reference (generated before-shots, not repo content)
 .taste-skill/
+
+# local sqlite (replay ledger durability)
+*.db
+*.db-wal
+*.db-shm
