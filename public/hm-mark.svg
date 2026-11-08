@@ -1,6 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="2" y="2" width="60" height="60" rx="10" fill="#2456d6"/>
+  <defs>
+    <linearGradient id="hm-b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f63ec"/>
+      <stop offset="0.55" stop-color="#2456d6"/>
+      <stop offset="1" stop-color="#1a41a8"/>
+    </linearGradient>
+    <linearGradient id="hm-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#hm-b)"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#hm-sheen)"/>
+  <rect x="3.2" y="3.2" width="57.6" height="57.6" rx="10.6" fill="none" stroke="#f6f3ec" stroke-opacity="0.35" stroke-width="1.2"/>
   <path d="M20 14v36M44 14v36M20 30h24" stroke="#f6f3ec" stroke-width="7" stroke-linecap="square"/>
   <circle cx="47" cy="47" r="11" fill="#26251e"/>
+  <circle cx="47" cy="47" r="11" fill="none" stroke="#f6f3ec" stroke-opacity="0.4" stroke-width="1.2"/>
   <path d="M42.5 47.5l3.2 3.2 5.8-6.4" stroke="#f6f3ec" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

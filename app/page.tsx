@@ -207,17 +207,16 @@ export default function Home() {
 
         {/* ---------- proof names ---------- */}
         <section className="hm-reveal" aria-label="Built on" style={{ padding: '5rem 0 1rem' }}>
-          <p className="hm-body-text" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem 2.5rem', alignItems: 'baseline' }}>
-            <span>Settled on Kite testnet, verified against</span>
+          <p className="hm-body-text" style={{ maxWidth: '62ch' }}>
+            Settled on Kite testnet, verified against{' '}
             <a className="hm-link" href="https://testnet.kitescan.ai" target="_blank" rel="noreferrer">
               KiteScan
             </a>
-            <span>sold by the</span>
-            <span style={{ fontWeight: 600 }}>hiremind-seller agent</span>
-            <span>on the</span>
+            , sold by the <span style={{ fontWeight: 600 }}>hiremind-seller agent</span> on the{' '}
             <a className="hm-link" href="https://www.openserv.ai" target="_blank" rel="noreferrer">
               OpenServ network
             </a>
+            .
           </p>
         </section>
 
