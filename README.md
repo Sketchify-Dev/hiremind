@@ -24,7 +24,8 @@ Live loop: topic in, 0.01 KITE out, brief plus receipt back.
   recorded, receipt status, replay guard), tries the OpenServ webhook (60s),
   then falls back to direct generation and returns brief + receipt. A hash
   pays out exactly once; generation failure releases the claim so the same
-  hash can be retried without paying twice.
+  hash can be retried without paying twice. The two paths run sequentially,
+  never as a race, so a late webhook can never overwrite a delivered brief.
 - `app/lib/brief.ts`: direct generation fallback chain: AgentRouter, then any
   OpenAI-compatible provider (with token-budget escalation for reasoning
   models), then Pollinations free tier. All paths strip em/en dashes from
@@ -32,9 +33,9 @@ Live loop: topic in, 0.01 KITE out, brief plus receipt back.
 - `app/lib/markdown.tsx`: tiny safe renderer for brief markdown. Builds React
   nodes directly, never raw HTML, so model output stays inert. Supports
   headings, lists, bold, and links (http and https only).
-- `app/page.tsx`: marketing landing (hero with a real delivered receipt,
-  proof line, how-it-works call and response column, showcase of real
-  briefs, price, FAQ). See `DESIGN.md` for the design contract.
+- `app/page.tsx`: marketing landing (hero with a sample receipt from a real
+  overpaid delivery, proof line, how-it-works call and response column, showcase
+  of real briefs, price, FAQ). See `DESIGN.md` for the design contract.
 - `app/brief/`: the buy flow lives here. Topic field and price, payment with
   on-chain verification, brief renders as a document below, receipt as a
   stamped slip.
@@ -78,12 +79,18 @@ faucet `https://faucet.gokite.ai`, explorer `https://testnet.kitescan.ai`.
   once (reused hashes are refused), overpayment is accepted with the actual
   amount recorded, underpayment and wrong-recipient payments are refused
   without burning the hash. No payment is ever stranded by age.
+- Showcase sample content stays inside what was actually generated: no
+  invented statistics. The one showcase finding that carried an unsourced
+  percentage was rewritten to a plain claim.
 - SERV Reasoning is the primary path: the paid request goes to the
   `hiremind-seller` agent (`HireMind Brief Machine` workflow) via the OpenServ
   webhook, and the platform runtime generates the brief. The direct fallback
   (AgentRouter / OpenAI-compatible / Pollinations) runs only when the webhook
   is unreachable, and the receipt honestly labels which path ran. A fallback
-  brief is never reported as SERV Reasoning.
+  brief is never reported as SERV Reasoning. As of this writing no completed
+  SERV run has been observed in the server logs (every webhook attempt so far
+  ended in the body timeout, then fallback), so a genuine end-to-end SERV
+  delivery is still the one manual test to run before claiming it.
 - Payment verification is fully on-chain against Kite testnet (chain 2368):
   success receipt, correct seller recipient, amount >= price. Wrong address,
   underpayment, failed txs, unknown hashes and other-chain hashes are all

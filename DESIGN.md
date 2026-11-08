@@ -48,7 +48,8 @@ grids, no eyebrow labels, no numbered steps, no arrows on links.
 
 ## Principles
 
-- One bold move: a real delivered receipt sits in the hero. Everything
+- One bold move: a sample receipt from a real overpaid delivery sits in the
+  hero, labeled as a sample with its fallback path on the slip. Everything
   else is quiet.
 - Motion answers actions only (pay, verifying, delivered). Entering
   elements use ease-out. One page-load moment at most. Respect reduced

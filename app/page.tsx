@@ -18,7 +18,7 @@ const SHOWCASE = [
     findings: [
       'Composite trust scores blend on-chain history with off-chain attestations to resist Sybil attacks.',
       'Portable reputation schemas use verifiable credentials so trust travels across platforms.',
-      'Reputation-weighted task allocation cut failed executions by 63 percent in one network study.'
+      'Reputation-weighted allocation directs new tasks toward higher scoring agents.'
     ],
     paid: '0.5 KITE',
     block: '22043773',
@@ -69,6 +69,7 @@ const FAQS = [
 
 export default function Home() {
   const [status, setStatus] = useState<Status | null>(null)
+  const [statusFailed, setStatusFailed] = useState(false)
   const [show, setShow] = useState(0)
   useReveal()
 
@@ -83,10 +84,12 @@ export default function Home() {
             codeVersion: String(d.codeVersion || 'unknown'),
             delivered: typeof d.redeemedCount === 'number' ? d.redeemedCount : 0
           })
+        } else if (live) {
+          setStatusFailed(true)
         }
       })
       .catch(() => {
-        if (live) setStatus(null)
+        if (live) setStatusFailed(true)
       })
     return () => {
       live = false
@@ -161,7 +164,11 @@ export default function Home() {
             </div>
             <div className="hm-fade-up hm-status hm-num" style={{ marginTop: '2rem' }}>
               <span>
-                {status ? `${status.delivered} delivered` : 'counting deliveries'} on this server
+                {status
+                  ? `${status.delivered} delivered on this server`
+                  : statusFailed
+                    ? 'delivery count unavailable'
+                    : 'counting deliveries on this server'}
               </span>
               <span className={status?.agentOnline ? 'ok' : ''}>
                 {status ? (status.agentOnline ? 'seller online' : 'fallback only') : 'checking seller'}
@@ -169,9 +176,10 @@ export default function Home() {
             </div>
           </div>
           <div className="hm-hero-right">
-            <div className="hm-receipt hm-fade-up" data-ui aria-label="A real delivered receipt">
+            <div style={{ width: 'min(100%, 26rem)' }}>
+            <div className="hm-receipt hm-fade-up" data-ui aria-label="Sample receipt from a real overpaid delivery" style={{ width: '100%' }}>
               <div className="hm-receipt-head">
-                <span className="hm-receipt-title">Receipt</span>
+                <span className="hm-receipt-title" style={{ whiteSpace: 'nowrap' }}>Sample receipt</span>
                 <span className="hm-receipt-verified">payment verified, brief delivered</span>
               </div>
               <dl>
@@ -200,6 +208,11 @@ export default function Home() {
                 <span>KiteScan</span>
                 <span>0xda9e...f879f7</span>
               </div>
+            </div>
+            <p className="hm-small" style={{ marginTop: '1rem', color: 'var(--hm-bg)', opacity: 0.75, maxWidth: '34ch' }}>
+              Sample of a real delivery: the buyer overpaid 0.5 KITE for a
+              0.01 brief. The slip labels the generation path as run.
+            </p>
             </div>
           </div>
         </section>
@@ -293,8 +306,12 @@ export default function Home() {
                 </button>
               ))}
               <p className="hm-small" style={{ color: 'var(--hm-muted)', marginTop: '1rem' }}>
-                Two briefs delivered and redeemed on this server. Summaries shown, full text
-                delivered to the buyer with the receipt.
+                {status
+                  ? `${status.delivered} brief${status.delivered === 1 ? '' : 's'} delivered and redeemed on this server. `
+                  : statusFailed
+                    ? 'Delivery count unavailable. '
+                    : 'Counting deliveries on this server. '}
+                Summaries shown, full text delivered to the buyer with the receipt.
               </p>
             </div>
             <div className="hm-stage">

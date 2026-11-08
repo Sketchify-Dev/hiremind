@@ -15,9 +15,10 @@ chain built for agents) meets paid data (briefs grounded in cited sources).
 The whole loop is auditable on screen: topic, payment hash, brief, receipt.
 
 **Stack:** OpenServ TS SDK + client (provision, webhook trigger, run-less
-capability), Next.js 16, Viem, Kite testnet (chain 2368). Brief generation
-races the platform runtime against a direct provider chain so the demo never
-dead-ends on tunnel flakiness; the receipt always names which path ran.
+capability), Next.js 16, Viem, Kite testnet (chain 2368). Brief delivery tries
+the platform runtime first, then a direct provider chain sequentially so the
+demo never dead-ends on tunnel flakiness; the receipt always names which path
+ran. No completed SERV run observed yet, see README truthful notes.
 
 **Links:** repo (this), demo video (pending), seller agent 4926 / workflow
 HireMind Brief Machine, KiteScan transaction from the recorded demo.

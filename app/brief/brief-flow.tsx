@@ -76,6 +76,7 @@ export function BriefFlowInner() {
   const [receiptCopied, setReceiptCopied] = useState(false)
   const [copyFailed, setCopyFailed] = useState(false)
   const [status, setStatus] = useState<Status | null>(null)
+  const [statusFailed, setStatusFailed] = useState(false)
   const [showMobileCta, setShowMobileCta] = useState(true)
   useReveal()
 
@@ -91,10 +92,12 @@ export function BriefFlowInner() {
             codeVersion: String(d.codeVersion || 'unknown'),
             delivered: typeof d.redeemedCount === 'number' ? d.redeemedCount : 0
           })
+        } else if (live && !cancelled) {
+          setStatusFailed(true)
         }
       })
       .catch(() => {
-        if (live && !cancelled) setStatus(null)
+        if (live && !cancelled) setStatusFailed(true)
       })
     return () => {
       live = false
@@ -302,7 +305,7 @@ export function BriefFlowInner() {
                 <dd>ships with a receipt</dd>
               </div>
               <div>
-                <dt>{status ? `${status.delivered} delivered` : 'live count'}</dt>
+                <dt>{status ? `${status.delivered} delivered` : statusFailed ? 'count unavailable' : 'live count'}</dt>
                 <dd>briefs redeemed on this server</dd>
               </div>
             </dl>
@@ -312,7 +315,9 @@ export function BriefFlowInner() {
                   ? status.agentOnline
                     ? 'seller online'
                     : 'fallback only'
-                  : 'checking seller'}
+                  : statusFailed
+                    ? 'status unavailable'
+                    : 'checking seller'}
               </span>
               {status && <span>build {status.codeVersion}</span>}
             </p>
