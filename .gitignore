@@ -48,3 +48,6 @@ agent/.openserv.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design skill reference (generated before-shots, not repo content)
+.taste-skill/
