@@ -3,8 +3,8 @@
 Pay an AI seller agent on-chain, get a research brief with receipt.
 Built for SERV Hackathon 02, Open Track, on the OpenServ agent network.
 
-No custom domain yet. When one exists, update the host in app/layout.tsx,
-app/robots.ts, app/sitemap.ts, and this file.
+Live at https://hiremind-orpin.vercel.app (host in app/layout.tsx,
+app/robots.ts, app/sitemap.ts, and this file).
 
 ## Pages
 

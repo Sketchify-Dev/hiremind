@@ -1,8 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-// No custom domain yet: replace with the real host when one exists,
-// plus layout.tsx, sitemap.ts, and public/llms.txt.
-const SITE_URL = 'https://hiremind.example.com'
+const SITE_URL = 'https://hiremind-orpin.vercel.app'
 
 export default function robots(): MetadataRoute.Robots {
   return {

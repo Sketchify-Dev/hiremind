@@ -10,9 +10,9 @@ const bricolage = Bricolage_Grotesque({
   variable: "--hm-font",
 });
 
-// No custom domain yet. When one exists, replace this in layout.tsx,
+// Live deployment host. Custom domain: replace in layout.tsx,
 // app/robots.ts, app/sitemap.ts, and public/llms.txt.
-const SITE_URL = "https://hiremind.example.com";
+const SITE_URL = "https://hiremind-orpin.vercel.app";
 
 export const viewport: Viewport = {
   themeColor: "#dfdedb",
