@@ -211,7 +211,7 @@ export default function Home() {
             </div>
             <p className="hm-small" style={{ marginTop: '1rem', color: 'var(--hm-bg)', opacity: 0.75, maxWidth: '34ch' }}>
               Sample of a real delivery: the buyer overpaid 0.5 KITE for a
-              0.01 brief. The slip labels the generation path as run.
+              0.01 brief. The slip labels the generation path as a direct fallback run.
             </p>
             </div>
           </div>
