@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createPublicClient, defineChain, formatEther, http, parseEther } from 'viem'
-import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
-import { dirname, join } from 'path'
+import { appendFileSync, readFileSync } from 'fs'
+import { join } from 'path'
+import { ledger } from '../../lib/ledger'
 import { generateBriefDirect, stripDashes } from '../../lib/brief'
 
 // Bump on every route change so GET /api/brief proves what's live.
@@ -23,7 +24,7 @@ function flow(msg: string) {
 const CLAIM_TTL_MS = 15 * 60 * 1000
 const inFlightAt = new Map<string, number>()
 function claimHash(normalized: string): 'ok' | 'redeemed' | 'inflight' {
-  if (usedTxHashes.has(normalized)) return 'redeemed'
+  if (ledger.has(normalized)) return 'redeemed'
   const started = inFlightAt.get(normalized)
   if (started !== undefined) {
     if (Date.now() - started < CLAIM_TTL_MS) return 'inflight'
@@ -56,41 +57,11 @@ const kiteTestnet = defineChain({
 // Replay protection: in-memory claim set (atomic within this process, because
 // the check-and-claim below runs synchronously with no await between, so two
 // simultaneous requests for the same hash cannot both pass) backed by a
-// persistent ledger file so a restart cannot re-open a redeemed hash.
+// persistent ledger so a restart cannot re-open a redeemed hash.
 // NOTE for judges: single-file JSON ledger is demo-grade durability, not a
 // production double-spend store (no cross-instance locking). Good enough for
 // a hackathon demo; production needs a DB with a unique constraint.
-const LEDGER_PATH = join(process.cwd(), '.data', 'redeemed.json')
-const usedTxHashes = new Set<string>()
 const inFlight = new Set<string>()
-let ledgerLoaded = false
-
-function loadLedger() {
-  if (ledgerLoaded) return
-  ledgerLoaded = true
-  try {
-    const raw = readFileSync(LEDGER_PATH, 'utf8')
-    const arr: unknown = JSON.parse(raw)
-    if (Array.isArray(arr)) {
-      for (const h of arr) {
-        if (typeof h === 'string' && /^0x[0-9a-f]{64}$/.test(h)) usedTxHashes.add(h)
-      }
-    }
-  } catch {
-    // no ledger yet, first run
-  }
-}
-
-function persistLedger() {
-  try {
-    mkdirSync(dirname(LEDGER_PATH), { recursive: true })
-    writeFileSync(LEDGER_PATH, JSON.stringify([...usedTxHashes]), 'utf8')
-  } catch (err) {
-    console.warn(`could not persist redemption ledger: ${(err as Error).message}`)
-  }
-}
-
-loadLedger()
 
 function priceInfo() {
   return {
@@ -207,7 +178,7 @@ export async function GET() {
     ...priceInfo(),
     agentOnline: !!resolveWebhookUrl(),
     codeVersion: CODE_VERSION,
-    redeemedCount: usedTxHashes.size,
+    redeemedCount: ledger.size(),
     inFlightCount: inFlight.size
   })
 }
@@ -305,56 +276,67 @@ export async function POST(req: Request) {
   // request (webhook + fallback) fits inside normal client timeouts.
   const webhookUrl = resolveWebhookUrl()
   flow(`claim ok for ${normalized}, webhook ${webhookUrl ? 'configured' : 'missing'}, code=${CODE_VERSION}`)
+  const MAX_WEBHOOK_ATTEMPTS = 3
   if (webhookUrl) {
-    try {
-      const controller = new AbortController()
-      const timeout = setTimeout(() => controller.abort(), 60_000)
-      const started = Date.now()
-      const res = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic }),
-        signal: controller.signal
-      }).finally(() => clearTimeout(timeout))
-      flow(`webhook HTTP ${res.status} after ${Date.now() - started}ms`)
-      if (res.ok) {
-        let payload: unknown = null
-        try {
-          // The webhook streams keepalive frames for minutes before the real
-          // payload; cap the body wait so it can't stall past the client.
-          const bodyTimeout = setTimeout(() => controller.abort(), 45_000)
-          payload = await res.json().finally(() => clearTimeout(bodyTimeout))
-        } catch (e) {
-          flow(`webhook body unreadable: ${(e as Error).message}, using direct generation`)
-        }
-        if (payload) {
-          const brief = briefFromWebhookResult(payload)
-          if (brief) {
-            usedTxHashes.add(normalized)
-            persistLedger()
-            releaseClaim(normalized)
-            flow(`SERV path success, ledger persisted (${usedTxHashes.size} redeemed)`)
-            return json({
-              brief: stripDashes(brief),
-              receipt: buildReceipt({
-                txHash,
-                info,
-                capability: 'research_brief',
-                model: 'SERV Reasoning via OpenServ runtime',
-                path: 'openserv-webhook',
-                blockNumber: paidBlock,
-                amountPaid: paidAmount
-              })
-            })
+    let servBrief: string | null = null
+    for (let attempt = 1; attempt <= MAX_WEBHOOK_ATTEMPTS && !servBrief; attempt++) {
+      try {
+        flow(`webhook attempt ${attempt}/${MAX_WEBHOOK_ATTEMPTS}`)
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 60_000)
+        const started = Date.now()
+        const res = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic }),
+          signal: controller.signal
+        }).finally(() => clearTimeout(timeout))
+        flow(`webhook attempt ${attempt} HTTP ${res.status} after ${Date.now() - started}ms`)
+        if (res.ok) {
+          let payload: unknown = null
+          try {
+            const bodyTimeout = setTimeout(() => controller.abort(), 45_000)
+            payload = await res.json().finally(() => clearTimeout(bodyTimeout))
+          } catch (e) {
+            flow(`webhook attempt ${attempt} body unreadable: ${(e as Error).message}`)
           }
-          flow('webhook 200 but no brief in payload, using direct generation')
+          if (payload) {
+            const brief = briefFromWebhookResult(payload)
+            if (brief) {
+              servBrief = brief
+              flow(`SERV brief received on attempt ${attempt}`)
+            } else {
+              flow(`webhook attempt ${attempt} 200 but no brief in payload`)
+            }
+          }
+        } else {
+          flow(`webhook attempt ${attempt} HTTP ${res.status}`)
         }
-      } else {
-        flow(`webhook HTTP ${res.status}, using direct generation`)
+      } catch (err) {
+        flow(`webhook attempt ${attempt} failed: ${(err as Error).message}`)
       }
-    } catch (err) {
-      flow(`webhook path failed (${(err as Error).message}), using direct generation`)
+      if (!servBrief && attempt < MAX_WEBHOOK_ATTEMPTS) {
+        await new Promise((r) => setTimeout(r, 2000 * attempt))
+      }
     }
+    if (servBrief) {
+      ledger.add(normalized)
+      releaseClaim(normalized)
+      flow(`SERV path success, ledger persisted (${ledger.size()} redeemed)`)
+      return json({
+        brief: stripDashes(servBrief),
+        receipt: buildReceipt({
+          txHash,
+          info,
+          capability: 'research_brief',
+          model: 'SERV Reasoning via OpenServ runtime',
+          path: 'openserv-webhook',
+          blockNumber: paidBlock,
+          amountPaid: paidAmount
+        })
+      })
+    }
+    flow('all SERV attempts exhausted, using direct generation')
   }
 
   // Step 4: direct generation fallback (no agent needed). It is labeled
@@ -362,10 +344,9 @@ export async function POST(req: Request) {
   try {
     flow('starting direct fallback generation')
     const { brief, model } = await generateBriefDirect(topic)
-    usedTxHashes.add(normalized)
-    persistLedger()
+    ledger.add(normalized)
     releaseClaim(normalized)
-    flow(`fallback success via ${model}, ledger persisted (${usedTxHashes.size} redeemed)`)
+    flow(`fallback success via ${model}, ledger persisted (${ledger.size()} redeemed)`)
     return json({
       brief,
       receipt: buildReceipt({
