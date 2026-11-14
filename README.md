@@ -17,8 +17,8 @@ Live loop: topic in, 0.01 KITE out, brief plus receipt back.
 
 ## How to Test
 
-1. `cp .env.example .env.local` — `SELLER_ADDRESS` is prefilled (Kite testnet, chain 2368).
-2. `npm install && npm run dev` — web app on localhost:3000.
+1. `cp .env.example .env.local`. `SELLER_ADDRESS` is prefilled (Kite testnet, chain 2368).
+2. `npm install && npm run dev`. Web app on localhost:3000.
 3. Get free test KITE from the faucet: https://faucet.gokite.ai
 4. Open `/brief`, pick a topic, get the price (0.01 KITE), send it to the seller
    address, paste the transaction hash → the brief plus a receipt (with KiteScan
