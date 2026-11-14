@@ -166,7 +166,7 @@ function resolveWebhookUrl(): string | null {
     join(process.cwd(), '.openserv.json')
   ]) {
     try {
-      const found = findTriggerToken(JSON.parse(readFileSync(candidate, 'utf8')))
+      const found = findTriggerToken(JSON.parse(readFileSync(/*turbopackIgnore: true*/ candidate, 'utf8')))
       if (found) return found
     } catch {
       // missing file, keep looking

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function Privacy() {
       <header className="hm-nav">
         <nav className="hm-frame hm-nav-inner" aria-label="Primary">
           <Link href="/" className="flex items-center gap-2" aria-label="HireMind home">
-            <img src="/hm-logo-horizontal.svg" alt="HireMind" width={172} height={56} className="hm-nav-logo" />
+            <Image src="/hm-logo-horizontal.svg" alt="HireMind" width={172} height={56} className="hm-nav-logo" />
           </Link>
           <Link href="/brief" className="hm-btn" style={{ minHeight: '2.75rem', fontSize: '1rem' }}>
             Buy a brief

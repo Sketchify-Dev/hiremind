@@ -135,7 +135,8 @@ export function BriefFlowInner() {
       if (res.status === 402 && data.code === 'PAYMENT_REQUIRED') {
         setQuote(data)
         setPhase('pay')
-        document.getElementById('pay-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        // pay-panel renders in the same tick, so scroll after the commit
+        setTimeout(() => document.getElementById('pay-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 0)
       } else {
         setError(data.error || 'Unexpected response from the server. Check the app server is running.')
         setPhase('idle')
@@ -196,7 +197,7 @@ export function BriefFlowInner() {
     setQuote(null)
     setError('')
     setPhase('idle')
-    document.getElementById('buy')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setTimeout(() => document.getElementById('buy')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
   async function copyAddress() {

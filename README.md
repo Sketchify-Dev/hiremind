@@ -13,6 +13,17 @@ receipt that links back to the transaction.
 
 Live loop: topic in, 0.01 KITE out, brief plus receipt back.
 
+![HireMind landing page: hero with a sample receipt, how-it-works strip, price block, FAQ](public/screenshots/landing-1440.png)
+
+## How to Test
+
+1. `cp .env.example .env.local` — `SELLER_ADDRESS` is prefilled (Kite testnet, chain 2368).
+2. `npm install && npm run dev` — web app on localhost:3000.
+3. Get free test KITE from the faucet: https://faucet.gokite.ai
+4. Open `/brief`, pick a topic, get the price (0.01 KITE), send it to the seller
+   address, paste the transaction hash → the brief plus a receipt (with KiteScan
+   link) arrives.
+
 ## Demo video
 
 [Pro cut, 95.8s](https://github.com/Sketchify-Dev/hiremind/releases/tag/demo-video-pro):
@@ -52,6 +63,15 @@ hero; the generation path is labeled on every receipt.
   `public/llms.txt`: finish line checklist (privacy note, 404, robots,
   sitemap, llms.txt). Canonical tags on `/` and `/brief`, JSON-LD
   (WebSite plus SoftwareApplication) on the landing.
+
+## Tech stack
+
+- **OpenServ** (sponsor platform, SERV Hackathon 02 Open Track): `@openserv-labs/sdk` + `@openserv-labs/client`; run-less `research_brief` capability, provisioned via `provision()` with a webhook trigger (agent 4926, workflow `HireMind Brief Machine`). The platform runtime writes the brief (SERV Reasoning path).
+- **Next.js 16 + React 19 + TypeScript 5**, App Router, Tailwind CSS v4. `productionBrowserSourceMaps: false`.
+- **Viem on Kite testnet** (chain ID 2368; RPC `https://rpc-testnet.gokite.ai`, explorer KiteScan): on-chain payment verification — right recipient, amount at least the price, success receipt, replay protection.
+- **x402-style paywall**: `POST /api/brief` answers 402 with price and seller address; `POST` with a txHash verifies on-chain, then delivers the brief plus a receipt that links to the transaction.
+- **Brief delivery chain**: OpenServ webhook first, then a direct fallback chain (AgentRouter -> OpenAI-compatible provider -> Pollinations free tier) run sequentially so the demo never dead-ends; the receipt always names the path that ran.
+- **Node 24** (pinned in `.nvmrc`); live at https://hiremind-orpin.vercel.app.
 
 ## Setup
 

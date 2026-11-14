@@ -67,6 +67,8 @@ const FAQS = [
   }
 ]
 
+const SITE_URL = 'https://hiremind-orpin.vercel.app'
+
 export default function Home() {
   const [status, setStatus] = useState<Status | null>(null)
   const [statusFailed, setStatusFailed] = useState(false)
@@ -104,7 +106,7 @@ export default function Home() {
       {
         '@type': 'WebSite',
         name: 'HireMind',
-        url: 'https://hiremind.example.com/'
+        url: SITE_URL
       },
       {
         '@type': 'SoftwareApplication',

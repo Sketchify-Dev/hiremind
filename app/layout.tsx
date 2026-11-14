@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
-import "./globals.css";
 import "./hm.css";
 
 const bricolage = Bricolage_Grotesque({
