@@ -13,6 +13,8 @@ receipt that links back to the transaction.
 
 Live loop: topic in, 0.01 KITE out, brief plus receipt back.
 
+![HireMind landing page: hero with a sample receipt, how-it-works strip, price block, FAQ](public/screenshots/landing-1440.png)
+
 ## How to Test
 
 1. `cp .env.example .env.local` — `SELLER_ADDRESS` is prefilled (Kite testnet, chain 2368).
